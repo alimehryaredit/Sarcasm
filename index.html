@@ -99,6 +99,9 @@ nav.solid{background:rgba(22,22,22,.78);backdrop-filter:blur(10px)}
 .gal.in button{clip-path:inset(0)}
 .gal img{transform:scale(1.25);transition:transform 1.4s var(--ease),filter .6s}.gal.in img{transform:scale(1)}
 .gal button:hover img{transform:scale(1.07);filter:brightness(.6)}
+/* mobile fix: ratio via padding (works on every phone) + no clip-path reveal on small screens */
+.gal button{aspect-ratio:auto;height:0;padding-bottom:56.25%}
+@media(max-width:700px){.gal button{clip-path:none;transition:none}.gal img{transform:none;transition:none}}
 #lb{position:fixed;inset:0;z-index:50;background:rgba(10,10,10,.94);display:none;place-items:center}
 #lb.on{display:grid}#lb img{width:auto;height:auto;max-width:92vw;max-height:88vh;object-fit:contain}
 #lb button{position:absolute;background:none;border:0;color:var(--ink);font:300 34px var(--sans);cursor:pointer;padding:16px}
