@@ -120,16 +120,6 @@ nav.solid{background:rgba(22,22,22,.78);backdrop-filter:blur(10px)}
 .social svg{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .social .social-label{color:var(--ink);font-weight:600}
 footer small{color:var(--mute);font-size:12px}
-/* responsive hero image: retain the original cover effect and parallax */
-/* Explicit device-specific hero images, including reliable local file previews. */
-.hero .bg .hero-desktop,
-.hero .bg .hero-mobile{display:block;width:100%;height:100%;object-fit:cover}
-.hero .bg .hero-mobile{display:none}
-@media(max-width:700px){
-  .hero .bg .hero-desktop{display:none}
-  .hero .bg .hero-mobile{display:block}
-}
-
 /* mobile: center the film poster and fit all contact links on one row */
 @media(max-width:700px){
   .poster{width:100%;display:flex;justify-content:center}
@@ -187,7 +177,7 @@ const FILM = {
     ["Visual Effects (VFX)", "Sina Pashami"]
   ],
   gallery: Array.from({length:21},(_,i)=>`assets/bts-${i+1}.jpg`),   // 21 cards: bts-1.jpg through bts-21.jpg
-  contact: [["Portfolio","https://alimehryaredit.github.io/portfolio/","portfolio"],["Instagram","https://instagram.com/alimehryar","instagram"],["Email","mailto:Alimehryaredit@gmail.com","email"]]
+  contact: [["IMDB","https://www.imdb.com/title/tt48410013/?ref_=ext_shr_lnk","portfolio"],["Instagram","https://instagram.com/alimehryar","instagram"],["Email","mailto:Alimehryaredit@gmail.com","email"]]
 };
 
 /* =====================  BUILD  ===================== */
@@ -210,10 +200,10 @@ const words=s=>s.split(" ").map((w,i)=>w[0]=="*"?`<span class="em" style="--i:${
 
 $("#app").innerHTML=`
 <header class="hero" id="home">
-  <div class="bg" id="bg">
-    <img class="hero-desktop" src="${F.backdrop}" alt="" onerror="console.warn('Desktop backdrop not found:', this.src)">
-    <img class="hero-mobile" src="${F.backdropMobile||F.backdrop}" alt="" onerror="console.warn('Mobile backdrop not found, using desktop image:', this.src); this.onerror=null; this.src=F.backdrop;">
-  </div>
+  <picture class="bg" id="bg">
+    <source media="(max-width: 700px)" srcset="${F.backdropMobile}">
+    <img src="${F.backdrop}" alt="" onerror="console.warn('Hero backdrop not found:', this.currentSrc); const mobileSource=this.parentNode.querySelector('source'); if(mobileSource){mobileSource.remove(); this.onerror=null;}">
+  </picture>
   <div class="hero-in"><p class="pre">${F.pre}</p><h1 aria-label="${F.title}">${F.logotype?`<img class="logotype" src="${F.logotype}" alt="${F.title}">`:chars(F.title)}</h1>${F.tagline?`<p class="tl">${F.tagline}</p>`:""}</div>
   <div class="scroll" aria-hidden="true"></div>
 </header>
